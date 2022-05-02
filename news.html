@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Detailed news</title>
+    <style>
+      #navbar{
+        display: flex;
+        gap: 5%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Same navbar with same functionality  -->
+    <!-- Append detailed news in div with id "detailed_news"  -->
+  
+    <div id="navbar"></div>
+    <div id="detailed_news"></div>
+  </body>
+
+</html>
+<script>
+  // import {navbar} from "/components/navbar.js"
+
+  //  document.getElementById("navbar").innerHTML = navbar();
+
+   let newArr = JSON.parse(localStorage.getItem("news")) || []
+
+function display(newArr)
+{
+    newArr.map(function(el){
+
+        var div1 = document.createElement("div")
+
+        var img = document.createElement("img");
+
+        img.src = el.urlToImage;
+
+        var h3 = document.createElement("h3");
+
+        h3.setAttribute("id","h3")
+        h3.innerText = el.title;
+
+        var p1 = document.createElement("p")
+        p1.innerText = el.content;
+
+        var p2 = document.createElement("p")
+        p2.innerText = el.description;
+
+        var p3 = document.createElement("p")
+        p3.innerText = el.source.name
+
+        div1.append(h3,img,p1,p2,p3,p4)
+
+        document.getElementById("detailed_news").append(div1)
+
+      
+
+
+    })
+}
+   
+</script>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>News App</title>
+    <style>
+      #navbar{
+        display: flex;
+        gap: 5%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Give Navbar with id "navbar"  -->
+    <!-- Navbar will have input with id search_input and a link to home page i.e. index.html -->
+    <!-- Sidebar will have id "sidebar"  -->
+    <!-- Give link to top headlines of countries in sidebar with id as their country codes 
+    india :- in
+    china :- ch
+    usa :- us
+    uk : uk
+    Newzeland :- nz -->
+
+    <!-- Append results inside div with id "results"  -->
+    <!-- News divs will have class "news"  -->
+
+    <div id="navbar">
+      <!-- <a href="index.html"> <h3>News App</h3></a>
+      <input type="text" id="search_input" placeholder="search"/> -->
+    </div>
+    <h1>Countries</h1>
+    <div id="sidebar">
+      <div id="in">India</div>
+      <div id="ch">China</div>
+      <div id="us">USA</div>
+      <div id="uk">UK</div>
+      <div id="nz">Newzeland</div>
+    </div>
+    <div id="results"></div>
+    <div class="news"></div>
+  </body>
+</html>
+<script type="module">
+  import {navbar} from "./components/navbar.js"
+
+   document.getElementById("navbar").innerHTML = navbar();
+
+   import {apicall,appendArticles} from "./scripts/fetchappend.js"
+   
+ 
+
+   let response = await apicall(`https://masai-mock-api.herokuapp.com/news/top-headlines?country=in`)
+
+     console.log("response",response)
+
+    let results = document.getElementById("results")
+
+    appendArticles(response,results)
+
+     let newsArr = JSON.parse(localStorage.getItem("news")) || [];
+
+    let search_input = document.getElementById("search_input")
+
+    search_input = addEventListener("keypress",(event)=>{
+      takedata(event)
+    })
+
+    const takedata = async(event) => {
+      try{
+        if(event.code=="Enter")
+        {
+          let input = search_input.value;
+
+          let res = await fetch(`https://masai-mock-api.herokuapp.com/news?q=${input}`)
+       
+          let data = await res.json()
+          // console.log(data)
+
+          localStorage.setItem("news",JSON.stringify(data));
+
+          window.location.href = "news.html";
+       
+        }
+
+      }catch(err)
+      {
+        console.log("err",err)
+      }
+    }
+
+
+
+</script>
